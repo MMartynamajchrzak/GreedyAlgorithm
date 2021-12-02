@@ -1,32 +1,58 @@
+import random
 from math import sqrt
 
 
-def read(file_name):
+def greedy_algorithm(file_name):
     coord = []
-    path = 0
+
+    # result = dict()
     with open(file_name) as file:
-        text = file.readlines()[7:]
+        text = file.readlines()[6:]
         for i in text:
-            coord.append(tuple(i.split()[1:3]))
+            coord.append(tuple(i.split()[0:3]))
+
+    # choosing one random element from which to start
+    r = random.randint(1, len(coord) + 1)
+    new_coord = [r]
+
+    # list of numbers representing indexes from remaining cities
+    remaining_cities = [i for i in range(1, len(coord)+1) if i not in new_coord]
+
+    while len(remaining_cities) > 0:
+        # find different distance
+        r = new_coord[-1]
+        minimum = -1
+        closest = 0
 
         for idx, item in enumerate(coord):
-            if idx == len(coord) - 1:
-                break
-            dist = sqrt((float(coord[idx+1][0]) - float(item[0]))**2 + (float(coord[idx+1][1]) - float(item[1]))**2)
-            path += dist
+            # loop through each item in order to get the smallest distance for a current point
+            if item[0] is not new_coord[-1] and idx + 1 not in new_coord:
+                dist = sqrt((float(coord[r-1][1]) - float(item[1]))**2 + (float(coord[r-1][2]) - float(item[2]))**2)
 
-        print(format(path, ".2f"))
-        # doesn't work YET :)
+                # finding closest city
+                if minimum == -1 or dist < minimum:
+                    minimum = dist
+                    closest = int(item[0])
 
-        return text
+        new_coord.append(closest)
+        remaining_cities.remove(closest)
+
+    result = f"list of indexes of cities sorted by the closest distance {new_coord}"
+    print(result)
+
+    return result
 
 
-read('files/ali535.tsp')
-read('files/berlin11_modified.tsp')
-read('files/berlin52.tsp')
-read('files/fl417.tsp')
-read('files/kroA100.tsp')
-read('files/kroA150.tsp')
-read('files/kroA200.tsp')
-read('files/nrw1379.tsp')
-read('files/pr2392.tsp')
+# FILES
+
+# greedy_algorithm('files/ali535.tsp') --> in case of this one we should change our function
+# to start from 8th line
+
+greedy_algorithm('files/berlin11_modified.tsp')
+greedy_algorithm('files/berlin52.tsp')
+greedy_algorithm('files/fl417.tsp')
+greedy_algorithm('files/kroA100.tsp')
+greedy_algorithm('files/kroA150.tsp')
+greedy_algorithm('files/kroA200.tsp')
+greedy_algorithm('files/nrw1379.tsp')
+greedy_algorithm('files/pr2392.tsp')
