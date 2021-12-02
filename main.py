@@ -19,7 +19,7 @@ def greedy_algorithm(file_name):
     remaining_cities = [i for i in range(1, len(coord)+1) if i not in new_coord]
 
     while len(remaining_cities) > 0:
-        # find different distance
+        # while there are still cities not taken into account
         r = new_coord[-1]
         minimum = -1
         closest = 0
@@ -38,16 +38,13 @@ def greedy_algorithm(file_name):
         remaining_cities.remove(closest)
 
     result = f"list of indexes of cities sorted by the closest distance {new_coord}"
-    print(result)
 
     return result
 
 
-# FILES
+# FILES to test
 
-# greedy_algorithm('files/ali535.tsp') --> in case of this one we should change our function
-# to start from 8th line
-
+greedy_algorithm('files/ali535.tsp')
 greedy_algorithm('files/berlin11_modified.tsp')
 greedy_algorithm('files/berlin52.tsp')
 greedy_algorithm('files/fl417.tsp')
