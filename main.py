@@ -4,6 +4,7 @@ from math import sqrt
 
 def greedy_algorithm(file_name):
     coord = []
+    final_distance = 0
 
     # result = dict()
     with open(file_name) as file:
@@ -34,10 +35,12 @@ def greedy_algorithm(file_name):
                     minimum = dist
                     closest = int(item[0])
 
+        final_distance += minimum
         new_coord.append(closest)
         remaining_cities.remove(closest)
 
-    result = f"list of indexes of cities sorted by the closest distance {new_coord}"
+    result = f"list of indexes of cities sorted by the closest distance {new_coord} " \
+             f"\nGive the total distance of {format(final_distance, '.2f')}"
 
     return result
 
@@ -47,9 +50,9 @@ def greedy_algorithm(file_name):
 greedy_algorithm('files/ali535.tsp')
 greedy_algorithm('files/berlin11_modified.tsp')
 greedy_algorithm('files/berlin52.tsp')
-greedy_algorithm('files/fl417.tsp')
-greedy_algorithm('files/kroA100.tsp')
-greedy_algorithm('files/kroA150.tsp')
-greedy_algorithm('files/kroA200.tsp')
-greedy_algorithm('files/nrw1379.tsp')
-greedy_algorithm('files/pr2392.tsp')
+# greedy_algorithm('files/fl417.tsp')
+# greedy_algorithm('files/kroA100.tsp')
+# greedy_algorithm('files/kroA150.tsp')
+# greedy_algorithm('files/kroA200.tsp')
+# greedy_algorithm('files/nrw1379.tsp')
+# greedy_algorithm('files/pr2392.tsp')
