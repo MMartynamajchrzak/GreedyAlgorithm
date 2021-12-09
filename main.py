@@ -39,6 +39,10 @@ def greedy_algorithm(coord):
         new_coord.append(closest)
         remaining_cities.remove(closest)
 
+    come_back = sqrt((float(coord[new_coord[-1]-1][1]) - float(coord[new_coord[1]-1][1])) ** 2 +
+                     (float(coord[new_coord[-1]-1][2]) - float(coord[new_coord[1]-1][2])) ** 2)
+    final_distance += come_back
+
     result = f"list of indexes of cities sorted by the closest distance {new_coord} " \
              f"\nGive the total distance of {format(final_distance, '.2f')}"
 
