@@ -2,9 +2,6 @@ import random
 from math import sqrt
 
 
-PART_OF_POP_FOR_TOURNAMENT = 20
-
-
 # parse
 def read(file_name):
     with open(file_name) as file:
@@ -78,9 +75,6 @@ class GeneticAlgorithm:
                          (float(coord[new_coord[-1] - 1][2]) - float(coord[new_coord[1] - 1][2])) ** 2)
         final_distance += come_back
 
-        result = f"list of indexes of cities sorted by the closest distance {new_coord} " \
-                 f"\nGive the total distance of {format(final_distance, '.2f')}"
-
         return new_coord
 
     # Distance
@@ -127,49 +121,43 @@ class GeneticAlgorithm:
 
         fittest = sorted(results)[:1]
 
-        print(f"The result with the shortest path: {fittest}")
+        fittest_pop = fittest[0][1]
 
-        return fittest
+        return fittest_pop
 
     # Mutations for the population
     @staticmethod
-    def mutations(pop, coord):
-        print(f"Population before mutations {pop} has distance: {GeneticAlgorithm.distance(pop, coord)}")
+    def mutations(pop):
         random_index = random.randint(0, len(pop) - 1)
         random_index_2 = random.randint(0, len(pop) - 1)
 
         pop[random_index], pop[random_index_2] = pop[random_index_2], pop[random_index]
 
-        print(f"Population after mutations {pop} has distance: {GeneticAlgorithm.distance(pop, coord)}")
-
         return pop
 
     @staticmethod
-    def inversion(pop, coord):
+    def inversion(pop):
         rand = get_two_random_items(pop)
-
-        print(f"Population before inversion {pop} has distance: {GeneticAlgorithm.distance(pop, coord)}")
 
         to_reverse = pop[rand[0]:rand[1]]
         to_reverse.reverse()
-        new_pop = pop
+        new_pop = pop.copy()
         del new_pop[rand[0]:rand[1]]
         new_pop[rand[0]:rand[0]] = to_reverse
-
-        print(f"New population {new_pop} has distance: {GeneticAlgorithm.distance(new_pop, coord)}")
 
         return new_pop
 
     @staticmethod
     # find best result out of n species to consider
-    def tournament(n, pop, coord):
-        pop_to_consider = random.sample(pop, n)
+    def tournament(pop, coord):
+        k = random.randint(1, len(pop) - 1)
+        pop_to_consider = random.sample(pop, k)
         result = GeneticAlgorithm.fitness(pop_to_consider, coord)
-        print(f"Result of the tournament is {result}")
+
         return result
 
     @staticmethod
-    def croosover(first_parent, second_parent):
+    def crossover(first_parent, second_parent):
         if len(first_parent) != len(second_parent):
             raise Exception("Two objects must be items of the same population, and therefore have the same length!")
 
@@ -188,4 +176,4 @@ class GeneticAlgorithm:
         # flatten
         flat = list(flatten(after_cut))
 
-        print(f"Output {flat}")
+        return flat
