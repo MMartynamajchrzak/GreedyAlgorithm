@@ -12,7 +12,7 @@ files_to_test = ['files/ali535.tsp', 'files/berlin11_modified.tsp', 'files/berli
                      'files/fl417.tsp', 'files/kroA100.tsp', 'files/kroA150.tsp',
                      'files/kroA200.tsp', 'files/nrw1379.tsp', 'files/pr2392.tsp']
 
-# choose one of the files from above
+//choose one of the files from above
 file_name = files_to_test[1]
 '''
 
